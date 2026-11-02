@@ -82,4 +82,32 @@ Guia de referência completo salvo em [01-automacao/interface-n8n.md](../01-auto
 
 ---
 
-**Retomar amanhã:** fechar o restante da Etapa 2 (fundamentos de API REST + Webhooks).
+## 02/11/2026 — Etapa 2, Aula 02: Webhooks e fundamentos de API REST
+
+> Conteúdo e exercícios em [02-apis-e-integracoes/aula-02-webhooks-e-api-rest.md](../02-apis-e-integracoes/aula-02-webhooks-e-api-rest.md).
+
+### Conceitos
+
+- **Webhook** —
+- **Diferença entre HTTP Request e Webhook (cliente vs. servidor)** —
+- **Segurança básica de webhooks (validação, autenticação)** —
+
+### Exercício 1 — Primeiro Webhook (curl → n8n)
+
+_(preencher)_
+
+### Exercício 2 — Webhook + validação (If)
+
+_(preencher)_
+
+### Exercício 3 — Desafio (opcional)
+
+_(preencher, se feito)_
+
+### Dificuldades encontradas
+
+### Aprendizados e próximos passos
+
+---
+
+**Retomar depois:** seguir para Etapa 3 — Integração e orquestração de IA.
