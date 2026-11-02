@@ -1,0 +1,27 @@
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# Node / TypeScript (TechPulse, GitQuest)
+node_modules/
+dist/
+build/
+.vite/
+
+# Python (LinkedIn AI Post Generator)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# n8n (execução local fora do Docker)
+.n8n/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
