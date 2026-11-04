@@ -85,29 +85,62 @@ Guia de referência completo salvo em [01-automacao/interface-n8n.md](../01-auto
 ## 02/11/2026 — Etapa 2, Aula 02: Webhooks e fundamentos de API REST
 
 > Conteúdo e exercícios em [02-apis-e-integracoes/aula-02-webhooks-e-api-rest.md](../02-apis-e-integracoes/aula-02-webhooks-e-api-rest.md).
+>
+> **Praticado de fato em 04/11** (troca de PC entre 02 e 03/11 atrasou a execução — conteúdo já estava documentado, só faltou a prática).
 
 ### Conceitos
 
-- **Webhook** —
-- **Diferença entre HTTP Request e Webhook (cliente vs. servidor)** —
-- **Segurança básica de webhooks (validação, autenticação)** —
+- **Webhook** — trigger que inicia o workflow quando recebe uma requisição HTTP externa, ao contrário do Schedule/Manual Trigger.
+- **Diferença entre HTTP Request e Webhook (cliente vs. servidor)** — no HTTP Request o n8n é cliente (consulta uma API externa); no Webhook o n8n é servidor (expõe uma URL que outros sistemas chamam).
+- **Segurança básica de webhooks** — Test URL só funciona uma vez por clique em "Listen"; em produção, validar sempre o dado recebido e considerar autenticação.
 
-### Exercício 1 — Primeiro Webhook (curl → n8n)
+### Exercício 1 — Primeiro Webhook (Postman → n8n)
 
-_(preencher)_
+Testado com Postman em vez de curl. Fluxo: configurar node Webhook (POST) → copiar Test URL → "Listen for test event" → enviar POST no Postman com body JSON (`nome`, `email`, `idade`).
+
+**Erro encontrado:** na primeira tentativa, o `body` chegou como string bruta (`"{\n  \"nome\": ...}"`), com header `content-type: text/plain`. Causa: no Postman, Body → raw estava com o dropdown em "Text" em vez de "JSON", então o Content-Type não foi setado corretamente.
+
+**Correção:** trocado o dropdown pra "JSON" no Postman. Resultado: `body` chegou como objeto JSON de verdade (`content-type: application/json`), com `nome`, `email` e `idade` acessíveis diretamente via `{{ $json.body.idade }}`.
 
 ### Exercício 2 — Webhook + validação (If)
 
-_(preencher)_
+Reaproveitada a lógica do If (`idade > 19`) já validada na Aula 01, trocando a expressão para `{{ $json.body.idade }}` (dado agora chega aninhado em `body`). Testado com `idade: 10` via Postman → caiu corretamente no **False Branch**. Confirma que a lógica de condição independe da origem do dado (manual, API externa ou evento via Webhook).
 
-### Exercício 3 — Desafio (opcional)
+### Exercício 3 — Desafio: Webhook + HTTP Request (mini-TechPulse orientado a evento)
 
-_(preencher, se feito)_
+Workflow duplicado a partir do anterior (pra preservar os Exercícios 1/2) e montado: **Webhook (recebe `title`, `url`) → HTTP Request (GET api.agify.io, simulando enriquecimento) → Edit Fields (combina os dois)**.
+
+**Erros encontrados e corrigidos:**
+1. Tentativa inicial no modo "JSON" do Edit Fields sem sintaxe de objeto válida (faltavam chaves, aspas e vírgulas) → erro de validação.
+2. Ao trocar para modo "Fixed"/Manual Mapping, o nome do campo e a expressão foram digitados juntos na mesma caixa (`titulo: {{ ... }}`) — o n8n entendeu isso como nome de campo e trocou sozinho pra aba "Expression", deixando o valor vazio. Corrigido separando: caixa de **nome** só com `titulo`, caixa de **value** com a expressão.
+3. Resquício do erro anterior: sobrou um `:` no final dos nomes dos campos (`"titulo:"`, `"url:"`, `"relevancia_estimada:"`). Corrigido removendo o `:` de cada nome.
+
+**Resultado final:**
+```json
+{
+  "count": 439,
+  "name": "ia",
+  "age": 54,
+  "titulo": "iFood lança novo modelo de IA",
+  "url": "https://exemplo.com/noticia",
+  "relevancia_estimada": "54"
+}
+```
+
+Combinação de dado do Webhook (2 nodes atrás, via `$('Webhook').item.json...`) com dado do HTTP Request (node imediatamente anterior, via `$json...`) funcionando no mesmo item.
 
 ### Dificuldades encontradas
 
+- Confundir o Content-Type de uma requisição manual (Postman) é um erro comum e realista — o mesmo aconteceria com qualquer cliente HTTP mal configurado. Boa lição sobre nunca assumir o formato do dado recebido sem checar.
+- No Edit Fields, misturar nome do campo com a expressão no mesmo input, e diferença entre os modos "Fixed" e "JSON" do node — cada um exige uma sintaxe diferente.
+- Entender que `$json` sempre refere ao node imediatamente anterior, e que pra pegar dado de um node mais atrás no fluxo é preciso referenciar pelo nome com `$('NomeDoNode')`.
+
 ### Aprendizados e próximos passos
+
+Entendido o papel do Webhook como "porta de entrada" de eventos externos, a importância do header `Content-Type`, e — o aprendizado mais valioso do dia — como combinar dados de múltiplos nodes anteriores (não só o imediato) dentro de um mesmo item, técnica essencial para o pipeline do TechPulse (coletar → enriquecer → organizar).
+
+**Etapa 2 — Lógica e integração de APIs: concluída. ✅**
 
 ---
 
-**Retomar depois:** seguir para Etapa 3 — Integração e orquestração de IA.
+**Retomar depois:** seguir para Etapa 3 — Integração e orquestração de IA (06/11).

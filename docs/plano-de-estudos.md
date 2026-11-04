@@ -34,10 +34,10 @@ A documentação deverá refletir o que foi realmente estudado e implementado.
 
 - [x] 02/11 — Condicionais, filtros e manipulação de dados JSON. _(IF + branches já praticado em 01/11)_
 - [x] 03/11 — HTTP Request e métodos HTTP. _(concluído adiantado em 01/11, com api.agify.io)_
-- [ ] 04/11 — Fundamentos de APIs REST e integração entre sistemas.
-- [ ] 05/11 — Webhooks e comunicação entre aplicações.
+- [x] 04/11 — Fundamentos de APIs REST e integração entre sistemas.
+- [x] 05/11 — Webhooks e comunicação entre aplicações. _(concluído adiantado em 04/11)_
 
-**Entrega:** workflow que consome uma API externa e trata seus dados.
+**Entrega:** workflow que consome uma API externa e trata seus dados. ✅
 
 ### Etapa 3 — Integração e orquestração de IA
 
