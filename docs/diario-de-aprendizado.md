@@ -151,22 +151,44 @@ Entendido o papel do Webhook como "porta de entrada" de eventos externos, a impo
 
 ### Conceitos
 
-- **RSS Feed Read** —
-- **Diferença entre API "de dado" e API "de IA" (prompt → resposta variável)** —
-- **Credencial Header Auth (Gemini API key)** —
+- **RSS Feed Read** — consulta uma fonte RSS sob demanda; retornou 21 itens de um feed real, cada um com `title`, `link`, `pubDate`, `content`/`contentSnippet`.
+- **Diferença entre API "de dado" e API "de IA" (prompt → resposta variável)** — API de dado (agify) sempre retorna o mesmo formato previsível; API de IA (Gemini) recebe um prompt e devolve texto gerado, variável a cada chamada, dentro de um "envelope" JSON (`candidates[0].content.parts[0].text`).
+- **Credencial Header Auth (Gemini API key)** — guardada via Settings → Credentials → Header Auth, nunca exposta no node.
 
 ### Exercício 1 — Ler fonte RSS real
 
-_(preencher)_
+Configurado RSS Feed Read com feed real (feedburner/TechCrunch). 21 itens retornados, cada um com título, link, data e conteúdo (HTML bruto em `content`, versão limpa em `contentSnippet`).
 
 ### Exercício 2 — Enviar notícia pro Gemini
 
-_(preencher)_
+**Erros encontrados e corrigidos, em sequência:**
+1. Campo "Name" do header da credencial preenchido com o nome/rótulo da credencial em vez do nome real do header (`x-goog-api-key`) → corrigido editando o campo certo dentro da credencial.
+2. "Send Body" desligado → corpo vazio, Gemini reclamando de `contents` não especificado → ligado e configurado em modo JSON.
+3. Uso do campo `content` (HTML bruto, cheio de aspas) dentro do prompt quebrou o JSON por aspas não escapadas → trocado para usar só `title` no prompt.
+4. Modelo usado: `gemini-3.8-flash` (confirmado como nome atual, substituiu `gemini-3.7-flash` em out/2026).
+5. Múltiplos **503 (Service Unavailable)** e um **429 (rate limit)** do Gemini durante os testes — identificados via log do container Docker (`docker compose logs n8n`), já que a chamada roda no backend e não aparece no DevTools do navegador.
 
-### Exercício 3 — Organizar resultado (notícia + resumo IA)
+### Exercício 3 — Organizar resultado + padrão de fallback
 
-_(preencher)_
+Ao final, decidimos ir além do exercício original e implementar um **padrão de fallback**: HTTP Request principal (`gemini-3.8-flash`) com **Settings → On Error: "Continue (using error output)"**, output de erro conectado a um segundo HTTP Request (fallback, modelo alternativo), e os outputs de sucesso de ambos convergindo no mesmo node **If**.
+
+Armadilha no caminho: tentativa inicial de criar o "If" renomeando um node **Edit Fields** — não funciona, o tipo do node não muda por renomear; foi preciso adicionar um node **If** de verdade.
+
+**Validação estrutural:** confirmado visualmente que a arquitetura está correta (Success → If direto; Error → fallback → If). Testes end-to-end ficaram inconclusivos porque, numa das rodadas, até o modelo de fallback tomou 503 — instabilidade da API gratuita do Gemini no momento, não erro de configuração.
+
+Também ativada a opção **"Execute Once"** no RSS Read, para processar só o primeiro item durante os testes em vez dos 21 de uma vez — reduz o consumo de cota da API enquanto se depura o workflow.
 
 ### Dificuldades encontradas
 
+- Diferenciar o "nome da credencial" (rótulo na lista) do "nome do header" (exigido pela API) — dois campos parecidos, fácil de confundir.
+- JSON montado por concatenação de string quebra com dado que contém aspas (HTML do RSS).
+- Node renomeado não muda de tipo — "If" só existe adicionando o node certo.
+- Depurar um node HTTP Request exige olhar o log do backend (Docker), não o DevTools do navegador — a chamada não passa pelo browser.
+
 ### Aprendizados e próximos passos
+
+Dia mais denso em debugging real do que os anteriores — quase todos os erros foram de integração (headers, JSON, tipos de node), não de lógica. Also implementado, por iniciativa própria, um padrão de resiliência (fallback entre dois modelos) que vai além do que a aula pedia.
+
+**Etapa 3 (parcial) — RSS + Gemini: arquitetura validada, pendente só reexecutar quando a API do Gemini estabilizar.**
+
+**Próximo passo:** retestar o fluxo completo depois de uma pausa, depois seguir para os próximos dias da Etapa 3 (construção de workflows com processamento por IA, engenharia de prompts, orquestração de múltiplas etapas).
