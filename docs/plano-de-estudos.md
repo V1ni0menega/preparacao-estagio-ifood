@@ -43,8 +43,8 @@ A documentação deverá refletir o que foi realmente estudado e implementado.
 
 **06/11 a 10/11**
 
-- [ ] 06/11 — Integração com fontes RSS e modelos de IA.
-- [ ] 07/11 — Construção de workflows com processamento por IA.
+- [x] 06/11 — Integração com fontes RSS e modelos de IA. _(concluído adiantado em 04/11)_
+- [x] 07/11 — Construção de workflows com processamento por IA. _(parcial, adiantado em 04/11: fallback + tratamento de erro; falta engenharia de prompts mais avançada)_
 - [ ] 08/11 — Engenharia de prompts e respostas estruturadas em JSON.
 - [ ] 09/11 — Orquestração de múltiplas etapas.
 - [ ] 10/11 — Tratamento de erros, tentativas e validação de resultados.

@@ -208,4 +208,20 @@ resumo_ia: {{ $json.candidates[0].content.parts[0].text }}
 
 **Etapa 3 (parcial) — RSS + Gemini: arquitetura e fallback validados end-to-end. Falta só o Edit Fields final de organização do resultado.**
 
-**Próximo passo:** fechar o Edit Fields final, depois seguir para os próximos dias da Etapa 3 (engenharia de prompts, orquestração de múltiplas etapas, tratamento de erros).
+## 04/11/2026 (cont.) — Edit Fields final + validação do caminho de erro + descoberta de cota
+
+Fechado o **Edit Fields** do branch True com `titulo_original`, `link` e `resumo_ia` — todos vieram preenchidos corretamente (ver exemplo real no exercício da aula).
+
+**Bug na validação do If:** ao tentar testar o branch False, uma segunda condição vazia (`[empty] is equal to value2`) ficou sobrando, ligada por **OR** à condição original — isso fazia o If sempre cair em "true", mascarando a validação de verdade. Removida a condição extra.
+
+**Teste real do caminho de erro:** forçado um 404 de propósito (nome de modelo inválido no fallback) para validar o branch False. Resultado: If corretamente detectou a ausência de `candidates` e roteou para o **Edit Fields final** (branch de erro), produzindo `{"status": "erro_ia"}`. Confirma o pipeline funcionando nos dois cenários (sucesso e falha total).
+
+**Descoberta importante — painel de cota do Google AI Studio:** consultado o painel de uso (Dashboard → Usage). Confirmado que o **Gemini 3.8 Flash estourou tanto o limite por minuto (12/5) quanto o diário (27/20)** — explica todos os 503/429 do dia. Já o fallback, **Gemini 3.5 Flash Lite**, tinha folga enorme (5/500 por dia). Ou seja: o padrão de fallback implementado não foi só exercício teórico — foi literalmente o que manteve o workflow funcionando durante os testes de hoje. Reset da cota diária é à meia-noite (horário do Pacífico).
+
+**Pendente para a próxima sessão (pequenos ajustes de limpeza):**
+- Corrigir nome do campo `"status: "` (sobrou `:` e espaço) para `"status"` no Edit Fields final.
+- Reverter a URL do HTTP Request1 de `gemini-xyz-invalido` (usado só pro teste de erro) de volta para `gemini-flash-lite-latest`.
+
+**Etapa 3 (RSS + Gemini + fallback + validação de erro): CONCLUÍDA. ✅** Adiantada em relação ao cronograma original (dias 06 e parte de 07/11 cobertos em 04/11).
+
+**Próximo passo:** os dois ajustes de limpeza acima, depois seguir para os próximos dias da Etapa 3 (engenharia de prompts, orquestração de múltiplas etapas).
