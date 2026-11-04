@@ -187,8 +187,25 @@ Também ativada a opção **"Execute Once"** no RSS Read, para processar só o p
 
 ### Aprendizados e próximos passos
 
-Dia mais denso em debugging real do que os anteriores — quase todos os erros foram de integração (headers, JSON, tipos de node), não de lógica. Also implementado, por iniciativa própria, um padrão de resiliência (fallback entre dois modelos) que vai além do que a aula pedia.
+Dia mais denso em debugging real do que os anteriores — quase todos os erros foram de integração (headers, JSON, tipos de node), não de lógica. Também implementado, por iniciativa própria, um padrão de resiliência (fallback entre dois modelos) que vai além do que a aula pedia.
 
-**Etapa 3 (parcial) — RSS + Gemini: arquitetura validada, pendente só reexecutar quando a API do Gemini estabilizar.**
+## 04/11/2026 (cont.) — Pipeline RSS → Gemini → If validado de ponta a ponta
 
-**Próximo passo:** retestar o fluxo completo depois de uma pausa, depois seguir para os próximos dias da Etapa 3 (construção de workflows com processamento por IA, engenharia de prompts, orquestração de múltiplas etapas).
+Depois da pausa, retestado o fluxo completo. Dois problemas a mais, resolvidos:
+
+1. **Descoberta de modelos via API** — em vez de adivinhar nome de modelo, chamada `GET /v1beta/models` (com a credencial Header Auth) retornou a lista real de modelos disponíveis. Fallback trocado para `gemini-flash-lite-latest` (alias "sempre atual" de um modelo mais leve, pool de capacidade separado do Flash principal).
+2. **Erro de tipo no If** — `"Wrong type: '[object Object]' is an object but was expecting a string"`. A condição `{{ $json.candidates }}` + "exists" estava configurada no tipo String, mas `candidates` é array/objeto. Corrigido ligando **"Convert types where required"** no If.
+
+**Resultado final:** `HTTP Request (Error) → HTTP Request1 (fallback, gemini-3.5-flash-lite) → If → True (1 item)`. Pipeline RSS → IA → validação funcionando de ponta a ponta.
+
+**Pendente para a próxima sessão:** adicionar o Edit Fields final no branch True do If, combinando:
+```
+titulo_original: {{ $('RSS Read').item.json.title }}
+link: {{ $('RSS Read').item.json.link }}
+resumo_ia: {{ $json.candidates[0].content.parts[0].text }}
+```
+(atenção ao nome exato do node — é "RSS Read" no canvas atual, não "RSS Feed Read" como no material da aula).
+
+**Etapa 3 (parcial) — RSS + Gemini: arquitetura e fallback validados end-to-end. Falta só o Edit Fields final de organização do resultado.**
+
+**Próximo passo:** fechar o Edit Fields final, depois seguir para os próximos dias da Etapa 3 (engenharia de prompts, orquestração de múltiplas etapas, tratamento de erros).
