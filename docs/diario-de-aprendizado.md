@@ -144,3 +144,29 @@ Entendido o papel do Webhook como "porta de entrada" de eventos externos, a impo
 ---
 
 **Retomar depois:** seguir para Etapa 3 — Integração e orquestração de IA (06/11).
+
+## 04/11/2026 (cont.) — Etapa 3, Aula 03: RSS e primeiros passos com Gemini
+
+> Conteúdo e exercícios em [03-orquestracao-ia/aula-03-rss-e-gemini.md](../03-orquestracao-ia/aula-03-rss-e-gemini.md). Adiantado em relação ao cronograma (previsto para 06/11).
+
+### Conceitos
+
+- **RSS Feed Read** —
+- **Diferença entre API "de dado" e API "de IA" (prompt → resposta variável)** —
+- **Credencial Header Auth (Gemini API key)** —
+
+### Exercício 1 — Ler fonte RSS real
+
+_(preencher)_
+
+### Exercício 2 — Enviar notícia pro Gemini
+
+_(preencher)_
+
+### Exercício 3 — Organizar resultado (notícia + resumo IA)
+
+_(preencher)_
+
+### Dificuldades encontradas
+
+### Aprendizados e próximos passos
