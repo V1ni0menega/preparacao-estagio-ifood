@@ -279,3 +279,44 @@ Adicionado o node `If1` após o `Edit Fields` verificando `{{ $json.relevante }}
 Compreendido na prática como transformar um LLM (que naturalmente gera texto livre e variável) em um **componente de decisão determinístico** dentro de um pipeline de engenharia, usando `responseMimeType: "application/json"`, `JSON.parse()` e condicionais booleanas.
 
 **Próximo passo:** Aula 05 (09/11) — Orquestração de múltiplas etapas (processar múltiplos itens da lista do RSS, deduplicação/filtragem prévia e encadeamento após o filtro de relevância).
+
+---
+
+## 08/11/2026 (cont.) — Etapa 3, Aula 05: Orquestração de múltiplas etapas (Lotes, Filtro e Agregação)
+
+> Conteúdo e exercícios em [03-orquestracao-ia/aula-05-orquestracao-multiplas-etapas.md](../03-orquestracao-ia/aula-05-orquestracao-multiplas-etapas.md). Adiantado em relação ao cronograma (previsto para 09/11).
+
+### Conceitos
+
+- **Princípio de pré-processamento antes da IA:** nunca enviar uma lista aberta diretamente para uma API de LLM. Usar nodes de custo zero (`Limit`, `Filter`, `Remove Duplicates`) antes do `HTTP Request` para controlar cota e latência.
+- **Processamento em lote (Fan-out) vs. Consolidação (Aggregate / Fan-in):** no n8n, múltiplos itens fluem individualmente pelos nodes e se dividem nos ramos `true` e `false` do `If`. O node **Aggregate** reúne os itens aprovados de volta em um único item contendo uma lista (`noticias_aprovadas`), permitindo gerar um único boletim consolidado.
+
+### Exercício 1 — Controle de lote com `Limit` + Feed técnico real (`dev.to/feed`)
+
+1. Adicionado node **Limit** (`Max Items: 3`) entre o `RSS Read` e o `HTTP Request`, e desligado o *Execute Once* do `HTTP Request`.
+2. No primeiro teste com o feed antigo (`techncruncher.blogspot.com`), as 3 notícias eram sobre marketing/conteúdo genérico e o Gemini reprovou todas (`relevante: false` → 3 itens na False Branch do `If1`).
+3. Trocada a fonte do `RSS Read` para `https://dev.to/feed` (comunidade de desenvolvedores).
+4. **Bugs encontrados e corrigidos no `Edit Fields`:**
+   - Inicialmente, o campo `relevante` (Boolean) estava com o valor em modo *Fixed* (`false`), sobrescrevendo a resposta do Gemini.
+   - Na tentativa de mudar para *Expression*, a expressão foi colada no **1º andar** (nome do campo) em vez do **3º andar** (valor do campo). Corrigido separando nome (`relevante`) no topo e a expressão `{{ JSON.parse($json.candidates[0].content.parts[0].text).relevante }}` na base.
+5. **Resultado no `If1`:** das 3 notícias do `dev.to` (em inglês e francês), o Gemini traduziu, resumiu e classificou todas, e o `If1` dividiu o lote automaticamente:
+   - **True Branch (`2 items`):** artigo sobre vetorização SVG no browser com *Rust e WebAssembly* (`Engenharia de Software`) e artigo sobre auditoria de hipóteses com *pytest em Python* (`Engenharia de Software`).
+   - **False Branch (`1 item`):** artigo em francês sobre o fim de ciclo do headset *Meta Quest 2* (`Outros` / hardware de consumo).
+
+### Exercícios 2 e 3 — Consolidação (`Aggregate`) e Boletim TechPulse (`Edit Fields1`)
+
+1. Conectado o node **Aggregate** na saída `true` do `If1`, agrupando os 2 itens aprovados no array `noticias_aprovadas`, e um **Aggregate1** na saída `false` do `If1` para agrupar separadamente as notícias descartadas pela curadoria.
+2. Conectado o **Edit Fields1** final montando o boletim (`data_geracao`, `total_aprovadas` e `destaques`).
+3. **Erros encontrados e corrigidos:**
+   - Nome do campo no `Aggregate` havia ficado com espaço inicial e acento (`" noticías_aprovadas"`), causando `undefined` em `$json.noticias_aprovadas.length`. Corrigido padronizando o nome para `noticias_aprovadas`.
+   - O 3º andar do campo `destaques` (tipo Array) estava em modo *Fixed*, gerando erro de validação de tipo (`expects a array`). Corrigido ativando *Expression*.
+
+#### Arquitetura final do pipeline no n8n (Etapa 3)
+
+![Workflow TechPulse — Orquestração em múltiplas etapas](assets/workflow-etapa3-orquestracao.png)
+
+### Aprendizados e próximos passos
+
+Construído o núcleo funcional do **TechPulse** de ponta a ponta: `RSS Read → Limit → Gemini (com Fallback) → Validação (If) → Extração JSON (Edit Fields) → Curadoria Semântica (If1) → Consolidação (Aggregate) → Boletim TechPulse (Edit Fields1)`.
+
+**Próximo passo:** fechar o último tópico da Etapa 3 (10/11 — Tratamento de erros, tentativas/retries e deduplicação), consolidando o que já foi adiantado com o padrão de fallback.

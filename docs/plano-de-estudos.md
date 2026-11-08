@@ -46,7 +46,7 @@ A documentação deverá refletir o que foi realmente estudado e implementado.
 - [x] 06/11 — Integração com fontes RSS e modelos de IA. _(concluído adiantado em 04/11)_
 - [x] 07/11 — Construção de workflows com processamento por IA. _(concluído adiantado em 04/11)_
 - [x] 08/11 — Engenharia de prompts e respostas estruturadas em JSON. _(concluído em 08/11)_
-- [ ] 09/11 — Orquestração de múltiplas etapas.
+- [x] 09/11 — Orquestração de múltiplas etapas. _(concluído adiantado em 08/11)_
 - [ ] 10/11 — Tratamento de erros, tentativas e validação de resultados. _(parcial já adiantado em 04/11 com fallback + validação de resposta)_
 
 **Entrega:** pipeline capaz de coletar informações e processá-las com IA.
