@@ -225,3 +225,57 @@ Fechado o **Edit Fields** do branch True com `titulo_original`, `link` e `resumo
 **Etapa 3 (RSS + Gemini + fallback + validação de erro): CONCLUÍDA. ✅** Adiantada em relação ao cronograma original (dias 06 e parte de 07/11 cobertos em 04/11).
 
 **Próximo passo:** os dois ajustes de limpeza acima, depois seguir para os próximos dias da Etapa 3 (engenharia de prompts, orquestração de múltiplas etapas).
+
+---
+
+## 08/11/2026 — Etapa 3, Aula 04: Engenharia de prompts e respostas estruturadas em JSON
+
+> Conteúdo e exercícios em [03-orquestracao-ia/aula-04-prompts-e-json-estruturado.md](../03-orquestracao-ia/aula-04-prompts-e-json-estruturado.md).
+
+### Conceitos
+
+- **Limitação de texto livre em automações:** respostas abertas mudam de formato a cada execução e inviabilizam filtros condicionais (`If`) ou gravação estruturada em banco.
+- **Contrato de saída (Schema no prompt) + `generationConfig`:** combinar especificação clara dos campos no prompt (`categoria`, `relevante`, `resumo`, `tags`) com `"responseMimeType": "application/json"` e `"temperature": 0.2` na API do Gemini garante retorno 100% JSON puro (sem cercas Markdown `` ```json ``).
+- **JSON dentro de JSON (`JSON.parse`):** a API do Gemini devolve o JSON serializado como string dentro de `candidates[0].content.parts[0].text`. Para extrair cada campo separadamente no n8n, utiliza-se `JSON.parse($json.candidates[0].content.parts[0].text).campo`.
+
+### Exercício 1 e 2 — Prompt estruturado e desempacotamento no `Edit Fields`
+
+1. Limpeza das pendências da sessão anterior (URL do fallback restaurada para `gemini-flash-lite-latest`).
+2. Atualizado o JSON Body do `HTTP Request` com papel de curador técnico do TechPulse, lista fechada de categorias, critério booleano de relevância e `generationConfig` (`responseMimeType: "application/json"`).
+3. **Erros encontrados e corrigidos:**
+   - **Erro `"invalid syntax"` no HTTP Request:** o uso de barras invertidas (`\"`) dentro da expressão JavaScript `{{ ... }}` causou erro de sintaxe no avaliador do n8n. Corrigido simplificando a expressão para `{{ $('RSS Read').item.json.title }}`.
+   - **Condição do `If` de validação com `value1` fixo:** o `If` pós-Gemini estava com a string literal `value1` (modo Fixed) + `exists`, fazendo qualquer erro passar pela True Branch e gerando campos `null` no `Edit Fields`. Corrigido trocando para modo **Expression** com `{{ $json.candidates }}` + `exists`.
+
+### Exercício 3 — Decisão de fluxo guiada pela IA (`If1`)
+
+Adicionado o node `If1` após o `Edit Fields` verificando `{{ $json.relevante }}` (`Boolean → is true`).
+
+**Resultado real obtido (2 execuções sobre a notícia *"How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)"*):**
+```json
+[
+  {
+    "titulo_original": "How I Get Free Traffic from ChatGPT in 2025 (AIO vs SEO)",
+    "link": "https://techncruncher.blogspot.com/2025/12/how-i-get-free-traffic-from-chatgpt-in.html",
+    "categoria ": "IA",
+    "relevante": false,
+    "resumo_ia": "O artigo aborda estratégias de otimização para inteligência artificial (AIO) em comparação ao SEO tradicional para atrair tráfego a partir do ChatGPT. O conteúdo é focado em marketing digital e táticas de tráfego, sem apelo técnico para desenvolvedores.",
+    "tags": ["ChatGPT", "SEO", "AIO"]
+  }
+]
+```
+
+**Observação importante sobre determinismo em LLMs:**
+- Na 1ª execução, o modelo classificou `"categoria": "Negócios Tech"`. Na 2ª execução, classificou `"categoria": "IA"` (ambas da lista permitida, pois o tema cruza ChatGPT com SEO/Marketing).
+- Porém, nas **duas execuções** ele manteve `"relevante": false` com consistência total, explicando no resumo que o artigo é focado em marketing/tráfego e não tem apelo técnico para desenvolvedores.
+- O node `If1` leu `"relevante": false` e desviou o item corretamente para a **False Branch (`1 item`)**, barrando a notícia irrelevante automaticamente.
+
+### Dificuldades encontradas
+
+- Sintaxe de escape dentro de `{{ ... }}` no n8n: dentro das chaves duplas o código é JavaScript puro, não JSON bruto.
+- Lembrar de sempre alternar o campo do `If` de *Fixed* para *Expression* ao avaliar propriedades do `$json`.
+
+### Aprendizados e próximos passos
+
+Compreendido na prática como transformar um LLM (que naturalmente gera texto livre e variável) em um **componente de decisão determinístico** dentro de um pipeline de engenharia, usando `responseMimeType: "application/json"`, `JSON.parse()` e condicionais booleanas.
+
+**Próximo passo:** Aula 05 (09/11) — Orquestração de múltiplas etapas (processar múltiplos itens da lista do RSS, deduplicação/filtragem prévia e encadeamento após o filtro de relevância).

@@ -18,10 +18,10 @@ O objetivo é transformar o aprendizado teórico em experiências práticas, des
 
 | Etapa | Conteúdo | Status |
 |---|---|---|
-| 01 | Fundamentos de automação | 🟡 Em andamento |
-| 02 | n8n e construção de workflows | ⚪ Não iniciado |
-| 03 | APIs, HTTP e Webhooks | ⚪ Não iniciado |
-| 04 | Integração e orquestração de IA | ⚪ Não iniciado |
+| 01 | Fundamentos de automação | 🟢 Concluído |
+| 02 | n8n e construção de workflows | 🟢 Concluído |
+| 03 | APIs, HTTP e Webhooks | 🟢 Concluído |
+| 04 | Integração e orquestração de IA | 🟡 Em andamento |
 | 05 | Agentes de IA e Function Calling | ⚪ Não iniciado |
 | 06 | Projeto prático — TechPulse | ⚪ Não iniciado |
 | 07 | Preparação técnica para entrevistas | ⚪ Não iniciado |

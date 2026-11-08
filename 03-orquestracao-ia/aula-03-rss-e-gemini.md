@@ -2,7 +2,7 @@
 
 **Trilha:** Orquestração de IA
 **Ferramentas:** n8n, RSS, Gemini API
-**Status:** A fazer.
+**Status:** Concluída (em 04/11/2026).
 
 ## 1. Objetivo da aula
 

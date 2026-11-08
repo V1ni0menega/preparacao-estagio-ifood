@@ -2,7 +2,7 @@
 
 **Trilha:** Automação e Workflows
 **Ferramenta:** n8n
-**Status:** A fazer (pode ser praticado em qualquer PC com Docker, usando o `compose.yml` da raiz do repositório).
+**Status:** Concluída (em 04/11/2026).
 
 ## 1. Objetivo da aula
 
