@@ -160,13 +160,11 @@ Fluxo proposto:
 - Compreensão do papel do n8n na automação e integração de serviços.
 - Identificação de possibilidades de integração de modelos de IA em processos automatizados.
 
-## 6. Próximos passos
+## 6. Implementação prática no n8n
 
-- Construir os primeiros workflows no n8n.
-- Explorar a interface e a configuração dos nodes.
-- Executar fluxos manualmente.
-- Trabalhar com dados de entrada e saída.
-- Implementar condições utilizando o node IF.
+Após a modelagem teórica, o primeiro workflow funcional foi construído no n8n integrando **Manual Trigger → HTTP Request (`api.agify.io`) → Edit Fields → If (`age > 19`) → Edit Fields (status aprovado / pendente)**:
+
+![Workflow Etapa 1 — HTTP Request e Condicional IF](../docs/assets/workflow-etapa1-fundamentos-api.png)
 
 ---
 

@@ -79,6 +79,8 @@ Monte: **Webhook → If (idade > 19) → Edit Fields (status: aprovado | pendent
 
 Combine os dois conceitos: um Webhook que recebe uma notícia (`title`, `url`) e, antes de salvar, faz um **HTTP Request** para enriquecer o dado (ex.: consultar outra API). Isso é essencialmente um mini-TechPulse orientado a evento em vez de agendado.
 
+![Workflow Etapa 2 — Webhook e Enriquecimento de Dados](../docs/assets/workflow-etapa2-webhook-enriquecimento.png)
+
 ## 5. Antes de trocar de computador
 
 O workflow construído fica salvo só no volume Docker local (`n8n_data`), **não no Git**. Para continuar de onde parou em outro PC:

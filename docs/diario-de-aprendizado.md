@@ -68,6 +68,8 @@ Erro encontrado: após trocar o HTTP Request, o fluxo continuou caindo no False 
 
 Validação final: `age: 29` → **True Branch** → `status: aprovado` ✓. Workflow executado com sucesso.
 
+![Workflow Etapa 1 — HTTP Request e Condicional IF](assets/workflow-etapa1-fundamentos-api.png)
+
 **Aprendizado:** dado estático deixado em um node anterior pode mascarar silenciosamente um dado novo vindo de uma API — sempre conferir se o nome do campo usado nas expressões bate com o que a fonte de dados realmente retorna.
 
 **Próximo passo:** Webhook (etapa 2) e explorar mais a fundo tratamento de erros/condições na resposta da API (ex.: o que fazer se a API não retornar `age`).
@@ -128,6 +130,8 @@ Workflow duplicado a partir do anterior (pra preservar os Exercícios 1/2) e mon
 ```
 
 Combinação de dado do Webhook (2 nodes atrás, via `$('Webhook').item.json...`) com dado do HTTP Request (node imediatamente anterior, via `$json...`) funcionando no mesmo item.
+
+![Workflow Etapa 2 — Webhook e Enriquecimento de Dados](assets/workflow-etapa2-webhook-enriquecimento.png)
 
 ### Dificuldades encontradas
 
