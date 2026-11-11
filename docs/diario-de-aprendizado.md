@@ -365,3 +365,37 @@ Construído o núcleo funcional do **TechPulse** de ponta a ponta: `RSS Read →
 O pipeline do TechPulse agora é um sistema de nível de produção: resiliente a falhas de rede, imune a duplicações de notícias, com controle de lote, curadoria semântica e saída estruturada em JSON.
 
 **Próximo passo:** Etapa 4 — Agentes de IA e Function Calling (11/11: Conceitos de Agentes, loops ReAct e diferenças em relação a workflows tradicionais).
+
+---
+
+## 11/11/2026 (cont.) — Etapa 4, Aula 07: Conceitos fundamentais de Agentes de IA vs. Workflows
+
+> Conteúdo completo em [04-agentes-ia/aula-07-conceitos-de-agentes-ia.md](../04-agentes-ia/aula-07-conceitos-de-agentes-ia.md).
+
+### Conceitos
+
+- **Mudança de Paradigma (Workflow vs. Agente):**
+  - No *Workflow*, o desenvolvedor programa a rota exata (início, meio e fim fixos).
+  - No *Agente*, o desenvolvedor fornece um objetivo (*Goal*) e um catálogo de ferramentas (*Tools*); o LLM decide a rota, a ordem e quais ferramentas chamar.
+- **Loop de Raciocínio ReAct (Reasoning + Acting):**
+  - Ciclo iterativo composto por `Thought` (planejar a próxima ação com base no estado atual) → `Action` (disparar uma tool externa) → `Observation` (receber o retorno da tool e injetar no contexto) → `Thought` (avaliar se o objetivo foi atingido ou se precisa de mais ações).
+- **Os 4 Pilares da Anatomia de um Agente:**
+  1. *Cérebro (LLM):* motor de raciocínio e linguagem.
+  2. *Ferramentas (Tools / Function Calling):* ponte para o mundo real (bancos, APIs, web, scripts).
+  3. *Memória (Memory):* curto prazo (histórico da conversa/loop) e longo prazo (RAG/vetorial).
+  4. *Planejamento (Planning):* decomposição de metas e auto-correção perante erros.
+- **Trade-offs de Engenharia (Quando usar cada um):**
+  - Workflows: para processos repetitivos, determinísticos, de baixo custo e baixa latência (ex.: emissão de notas, pipelines rígidos como o TechPulse).
+  - Agentes: para tarefas investigativas, dinâmicas e com múltiplos caminhos possíveis (ex.: atendimento complexo, análise de fraudes, assistentes autônomos).
+
+#### Anotações e Diagramas no Caderno (Ciclo ReAct e Anatomia)
+
+| Ciclo ReAct (`Thought` ➔ `Action` ➔ `Observation`) | 4 Pilares da Anatomia de um Agente |
+|:---:|:---:|
+| ![Anotações do Ciclo ReAct](assets/caderno/aula-07-caderno-pag1.jpg) | ![Anotações da Anatomia com Post-its](assets/caderno/aula-07-caderno-pag2.jpg) |
+
+### Aprendizados e próximos passos
+
+Compreendido o conceito teórico que fundamenta os agentes modernos antes de escrever código ou conectar nós no n8n.
+
+**Próximo passo:** Aula 08 (12/11) — Function Calling na prática: como os modelos avisam que querem chamar ferramentas externas com schemas JSON estruturados.

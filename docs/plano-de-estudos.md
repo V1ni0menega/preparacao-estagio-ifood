@@ -55,7 +55,7 @@ A documentação deverá refletir o que foi realmente estudado e implementado.
 
 **11/11 a 13/11**
 
-- [ ] 11/11 — Conceitos de agentes de IA e diferenças em relação a workflows tradicionais.
+- [x] 11/11 — Conceitos de agentes de IA e diferenças em relação a workflows tradicionais. _(concluído em 11/11)_
 - [ ] 12/11 — Function Calling e utilização de ferramentas por modelos.
 - [ ] 13/11 — Limitações, validação, supervisão e segurança de agentes.
 

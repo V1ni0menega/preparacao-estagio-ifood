@@ -24,7 +24,7 @@ O objetivo é transformar o aprendizado teórico em experiências práticas, des
 | 02 | n8n e construção de workflows | Condicionais (`IF`), manipulação JSON e expressões | 🟢 Concluído |
 | 03 | APIs, HTTP e Webhooks | [Aula 02 — Webhooks e API REST](02-apis-e-integracoes/aula-02-webhooks-e-api-rest.md) | 🟢 Concluído |
 | 04 | Integração e orquestração de IA | [Aula 03 — RSS e Gemini](03-orquestracao-ia/aula-03-rss-e-gemini.md) · [Aula 04 — Prompts e JSON](03-orquestracao-ia/aula-04-prompts-e-json-estruturado.md) · [Aula 05 — Orquestração](03-orquestracao-ia/aula-05-orquestracao-multiplas-etapas.md) · [Aula 06 — Resiliência](03-orquestracao-ia/aula-06-tratamento-erros-retries-deduplicacao.md) | 🟢 Concluído |
-| 05 | Agentes de IA e Function Calling | Agentes, ferramentas e validação | 🟡 Em andamento |
+| 05 | Agentes de IA e Function Calling | [Aula 07 — Conceitos](04-agentes-ia/aula-07-conceitos-de-agentes-ia.md) · [Aula 08 — Function Calling](04-agentes-ia/aula-08-function-calling-e-agentes-pratica.md) | 🟡 Em andamento |
 | 06 | Projeto prático — TechPulse | Integração end-to-end do MVP | ⚪ Não iniciado |
 | 07 | Preparação técnica para entrevistas | Revisão conceitual e portfólio | ⚪ Não iniciado |
 
@@ -92,6 +92,8 @@ preparacao-estagio-ifood/
 │   ├── aula-05-orquestracao-multiplas-etapas.md
 │   └── aula-06-tratamento-erros-retries-deduplicacao.md
 ├── 04-agentes-ia/
+│   ├── aula-07-conceitos-de-agentes-ia.md
+│   └── aula-08-function-calling-e-agentes-pratica.md
 ├── 05-projeto-pratico/
 └── 06-preparacao-entrevista/
 ```
@@ -110,13 +112,34 @@ A interface fica disponível em `http://localhost:5678`.
 
 ## Metodologia
 
-A preparação será organizada em três frentes:
+A preparação é organizada em três frentes complementares:
 
-- **Teoria:** compreensão dos conceitos e fundamentos técnicos.
-- **Prática:** construção de workflows, experimentos e aplicações.
-- **Documentação:** registro dos aprendizados, dificuldades, decisões técnicas e resultados.
+- **Teoria:** compreensão dos conceitos e fundamentos técnicos, estruturados e desenhados à mão no caderno (diagramas de arquitetura, tabelas comparativas e esquemas de dados).
+- **Prática:** construção de workflows, experimentos com LLMs e pipelines automatizados no n8n.
+- **Documentação:** registro sistemático diário de aprendizados, dificuldades enfrentadas e soluções no Git.
 
-Cada atividade relevante deverá registrar:
+### Estudo Teórico e Arquitetura Conceitual
+
+| Diagrama do Ciclo ReAct (Agentes de IA) | Anatomia de um Agente e Ferramentas |
+|:---:|:---:|
+| ![Ciclo ReAct no Caderno](docs/assets/caderno/aula-07-caderno-pag1.jpg) | ![Anatomia de um Agente no Caderno](docs/assets/caderno/aula-07-caderno-pag2.jpg) |
+
+<details>
+<summary><strong>📖 Ver galeria completa das anotações no caderno (Aulas 01 a 07)</strong></summary>
+
+<br>
+
+- **Aula 01 — Fundamentos de Automação:** [Página 1](docs/assets/caderno/aula-01-caderno-pag1.jpg) · [Página 2 (Workflow & Nodes)](docs/assets/caderno/aula-01-caderno-pag2.jpg) · [Página 3 (Triggers & HTTP)](docs/assets/caderno/aula-01-caderno-pag3.jpg)
+- **Aula 02 — Webhooks e API REST:** [Página 1 (Anatomia do Webhook)](docs/assets/caderno/aula-02-caderno-pag1.jpg) · [Página 2 (HTTP Request vs Webhook)](docs/assets/caderno/aula-02-caderno-pag2.jpg)
+- **Aula 03 — RSS e Gemini API:** [Página 1 (RSS & API de IA vs API de Dados)](docs/assets/caderno/aula-03-caderno-pag1.jpg)
+- **Aula 04 — Prompts e JSON Estruturado:** [Página 1 (4 Pilares de Prompt & JSON.parse)](docs/assets/caderno/aula-04-caderno-pag1.jpg)
+- **Aula 05 — Orquestração de Múltiplas Etapas:** [Página 1 (Pipeline & Determinismo)](docs/assets/caderno/aula-05-caderno-pag1.jpg) · [Página 2 (Lotes, Fan-out/Fan-in & Agregação)](docs/assets/caderno/aula-05-caderno-pag2.jpg)
+- **Aula 06 — Resiliência e Deduplicação:** [Página 1 (Retries & Deduplicação por Link)](docs/assets/caderno/aula-06-caderno-pag1.jpg) · [Página 2 (3 Camadas de Defesa em IA)](docs/assets/caderno/aula-06-caderno-pag2.jpg)
+- **Aula 07 — Conceitos de Agentes de IA:** [Página 1 (Ciclo ReAct)](docs/assets/caderno/aula-07-caderno-pag1.jpg) · [Página 2 (Anatomia do Agente com Post-its)](docs/assets/caderno/aula-07-caderno-pag2.jpg)
+
+</details>
+
+Cada atividade relevante registra:
 
 1. Objetivo.
 2. Conceitos estudados.
