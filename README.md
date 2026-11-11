@@ -24,9 +24,8 @@ O objetivo é transformar o aprendizado teórico em experiências práticas, des
 | 02 | n8n e construção de workflows | Condicionais (`IF`), manipulação JSON e expressões | 🟢 Concluído |
 | 03 | APIs, HTTP e Webhooks | [Aula 02 — Webhooks e API REST](02-apis-e-integracoes/aula-02-webhooks-e-api-rest.md) | 🟢 Concluído |
 | 04 | Integração e orquestração de IA | [Aula 03 — RSS e Gemini](03-orquestracao-ia/aula-03-rss-e-gemini.md) · [Aula 04 — Prompts e JSON](03-orquestracao-ia/aula-04-prompts-e-json-estruturado.md) · [Aula 05 — Orquestração](03-orquestracao-ia/aula-05-orquestracao-multiplas-etapas.md) · [Aula 06 — Resiliência](03-orquestracao-ia/aula-06-tratamento-erros-retries-deduplicacao.md) | 🟢 Concluído |
-| 05 | Agentes de IA e Function Calling | [Aula 07 — Conceitos](04-agentes-ia/aula-07-conceitos-de-agentes-ia.md) · [Aula 08 — Function Calling](04-agentes-ia/aula-08-function-calling-e-agentes-pratica.md) | 🟡 Em andamento |
+| 05 | Agentes de IA e Function Calling | [Aula 07 — Conceitos](04-agentes-ia/aula-07-conceitos-de-agentes-ia.md) · [Aula 08 — Function Calling](04-agentes-ia/aula-08-function-calling-e-agentes-pratica.md) · [Aula 09 — Guardrails e Tools](04-agentes-ia/aula-09-limitacoes-seguranca-e-custom-tools.md) | 🟡 Em andamento |
 | 06 | Projeto prático — TechPulse | Integração end-to-end do MVP | ⚪ Não iniciado |
-| 07 | Preparação técnica para entrevistas | Revisão conceitual e portfólio | ⚪ Não iniciado |
 
 ## Evolução prática no n8n (TechPulse Pipeline)
 
@@ -100,9 +99,9 @@ preparacao-estagio-ifood/
 │   └── aula-06-tratamento-erros-retries-deduplicacao.md
 ├── 04-agentes-ia/
 │   ├── aula-07-conceitos-de-agentes-ia.md
-│   └── aula-08-function-calling-e-agentes-pratica.md
-├── 05-projeto-pratico/
-└── 06-preparacao-entrevista/
+│   ├── aula-08-function-calling-e-agentes-pratica.md
+│   └── aula-09-limitacoes-seguranca-e-custom-tools.md
+└── 05-projeto-pratico/
 ```
 
 A estrutura será ampliada conforme os estudos e experimentos evoluírem.
