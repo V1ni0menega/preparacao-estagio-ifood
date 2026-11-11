@@ -2,7 +2,7 @@
 
 **Trilha:** Agentes de IA e Function Calling  
 **Ferramentas:** n8n (`AI Agent`, `Google Gemini Chat Model`, `Window Buffer Memory`, `Tools`), Gemini API  
-**Status:** Em andamento.
+**Status:** Concluída (em 11/11/2026).
 
 ---
 
@@ -125,6 +125,17 @@ Por que uma calculadora? Porque LLMs não sabem fazer contas complexas de verdad
 5. **Teste 3 (Validação da Memória):**
    - Envie em seguida: *"Agora divida esse resultado por 2"*.
    - Veja o agente buscar na memória o número anterior, acionar a calculadora de novo e entregar a resposta certa!
+
+#### Resultados Reais dos Testes no Canvas e Chat
+
+| Estrutura do Agente de IA no n8n | Interação no Chat com Function Calling e Memória |
+|:---:|:---:|
+| ![Canvas do AI Agent no n8n](../docs/assets/workflow-etapa4-agente-ia.png) | ![Chat com Tool Calling e Simple Memory](../docs/assets/chat-agente-function-calling.png) |
+
+**Validação do Comportamento Autônomo:**
+1. **Intenção sem Tool:** À pergunta *"quem é você e o que vc sabe fazer?"*, o modelo respondeu com seu conhecimento de linguagem natural sem acionar ferramentas.
+2. **Disparo de Tool (Function Calling):** À pergunta matemática `84.729 * 384`, o modelo detectou a necessidade de cálculo exato, disparou o node `Calculator` e devolveu `32.535.936`.
+3. **Persistência de Memória de Curto Prazo:** À instrução *"Agora divida esse resultado por 2"*, o modelo recuperou o valor anterior do `Simple Memory`, acionou novamente a `Calculator` e calculou `16.267.968`.
 
 ---
 

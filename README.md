@@ -32,6 +32,13 @@ O objetivo é transformar o aprendizado teórico em experiências práticas, des
 
 Durante as etapas de automação e orquestração de IA, o pipeline do **TechPulse** foi evoluído incrementalmente no **n8n** (self-hosted via Docker):
 
+### Etapa 4 — Agente Autônomo de IA com Function Calling e Memória
+Construção de agente autônomo baseado no padrão ReAct, conectando o cérebro (**Google Gemini Chat Model**), memória de curto prazo (**Simple Memory**) e ferramenta externa (**Calculator**). O agente decide autonomamente quando responder com linguagem natural e quando pausar a execução para disparar uma ferramenta com parâmetros estruturados:
+
+| Estrutura do Agente de IA no n8n | Interação no Chat com Tool Calling e Memória |
+|:---:|:---:|
+| ![Canvas do AI Agent no n8n](docs/assets/workflow-etapa4-agente-ia.png) | ![Chat com Tool Calling e Simple Memory](docs/assets/chat-agente-function-calling.png) |
+
 ### Etapa 3 — Orquestração com IA, Fallback de Modelos, JSON Estruturado, Agregação e Resiliência
 Pipeline completo integrando coleta de feeds RSS, deduplicação na fonte (`Remove Duplicates`), controle de lote (`Limit`), classificação e resumo com a **API do Google Gemini** (`responseMimeType: "application/json"`), **tentativas automáticas (Retries)**, arquitetura de **fallback automático entre modelos** para resiliência contra limites de cota (`429`/`503`), curadoria semântica condicional (`If`) e consolidação de boletins (`Aggregate`):
 

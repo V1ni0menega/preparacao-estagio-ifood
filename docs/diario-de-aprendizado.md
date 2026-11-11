@@ -399,3 +399,40 @@ O pipeline do TechPulse agora é um sistema de nível de produção: resiliente 
 Compreendido o conceito teórico que fundamenta os agentes modernos antes de escrever código ou conectar nós no n8n.
 
 **Próximo passo:** Aula 08 (12/11) — Function Calling na prática: como os modelos avisam que querem chamar ferramentas externas com schemas JSON estruturados.
+
+---
+
+## 11/11/2026 (cont.) — Etapa 4, Aula 08: Function Calling e construção do primeiro Agente de IA
+
+> Conteúdo completo em [04-agentes-ia/aula-08-function-calling-e-agentes-pratica.md](../04-agentes-ia/aula-08-function-calling-e-agentes-pratica.md). Adiantado em relação ao cronograma (previsto para 12/11).
+
+### Conceitos
+
+- **Mecânica do Function Calling (Tool Calling):**
+  - Modelos de IA não executam código ou acessam APIs diretamente. O modelo recebe a especificação (*JSON Schema*) das ferramentas disponíveis e, ao detectar necessidade, retorna uma requisição estruturada (`functionCall: { name, args }`).
+  - O runtime (n8n ou backend) executa a função e devolve o `functionResponse` para o modelo formular a resposta final.
+- **A Tríade de um Agente no n8n:**
+  - *Trigger:* `When chat message received` (interface interativa de chat).
+  - *Orquestrador:* `AI Agent` (modo Tools Agent).
+  - *Cérebro:* `Google Gemini Chat Model` (Gemini API).
+  - *Memória:* `Simple Memory` (buffer em memória para histórico multi-turn).
+  - *Ferramenta:* `Calculator` (garante exatidão matemática de 100%, eliminando a propensão de LLMs a alucinar cálculos).
+
+### Implementação Prática e Validação
+
+Workflow construído no n8n conectando Chat Trigger, AI Agent, Google Gemini, Simple Memory e Calculator:
+
+| Estrutura do Agente de IA no n8n | Interação no Chat com Function Calling e Memória |
+|:---:|:---:|
+| ![Canvas do AI Agent no n8n](assets/workflow-etapa4-agente-ia.png) | ![Chat com Tool Calling e Simple Memory](assets/chat-agente-function-calling.png) |
+
+**Cenários Testados e Validados:**
+1. **Conversação Pura (Sem Tool):** Ao perguntar *"quem é você e o que vc sabe fazer?"*, o agente respondeu diretamente usando seu conhecimento nativo.
+2. **Disparo Autônomo de Ferramenta (Function Calling):** Ao enviar *"Quanto é 84.729 multiplicado por 384?"*, o nó `AI Agent` pausou, acionou a `Calculator` com os argumentos e retornou o valor exato: `32.535.936`.
+3. **Memória de Curto Prazo em Ação:** Ao enviar em seguida *"Agora divida esse resultado por 2"*, o agente buscou o valor anterior no `Simple Memory`, acionou novamente a `Calculator` e devolveu `16.267.968`.
+
+### Aprendizados e próximos passos
+
+**Entrega da Etapa 4 concluída:** experimento de agente de IA autônomo funcional com ferramenta e memória implementado com sucesso.
+
+**Próximo passo:** Aula 09 (13/11) — Limitações, supervisão humana (*Human-in-the-loop*), guardrails e segurança de agentes.
