@@ -23,8 +23,8 @@ O objetivo é transformar o aprendizado teórico em experiências práticas, des
 | 01 | Fundamentos de automação | [Aula 01 — Fundamentos](01-automacao/aula-01-fundamentos.md) · [Interface do n8n](01-automacao/interface-n8n.md) | 🟢 Concluído |
 | 02 | n8n e construção de workflows | Condicionais (`IF`), manipulação JSON e expressões | 🟢 Concluído |
 | 03 | APIs, HTTP e Webhooks | [Aula 02 — Webhooks e API REST](02-apis-e-integracoes/aula-02-webhooks-e-api-rest.md) | 🟢 Concluído |
-| 04 | Integração e orquestração de IA | [Aula 03 — RSS e Gemini](03-orquestracao-ia/aula-03-rss-e-gemini.md) · [Aula 04 — Prompts e JSON](03-orquestracao-ia/aula-04-prompts-e-json-estruturado.md) · [Aula 05 — Orquestração](03-orquestracao-ia/aula-05-orquestracao-multiplas-etapas.md) | 🟡 Em andamento |
-| 05 | Agentes de IA e Function Calling | Agentes, ferramentas e validação | ⚪ Não iniciado |
+| 04 | Integração e orquestração de IA | [Aula 03 — RSS e Gemini](03-orquestracao-ia/aula-03-rss-e-gemini.md) · [Aula 04 — Prompts e JSON](03-orquestracao-ia/aula-04-prompts-e-json-estruturado.md) · [Aula 05 — Orquestração](03-orquestracao-ia/aula-05-orquestracao-multiplas-etapas.md) · [Aula 06 — Resiliência](03-orquestracao-ia/aula-06-tratamento-erros-retries-deduplicacao.md) | 🟢 Concluído |
+| 05 | Agentes de IA e Function Calling | Agentes, ferramentas e validação | 🟡 Em andamento |
 | 06 | Projeto prático — TechPulse | Integração end-to-end do MVP | ⚪ Não iniciado |
 | 07 | Preparação técnica para entrevistas | Revisão conceitual e portfólio | ⚪ Não iniciado |
 
@@ -32,10 +32,10 @@ O objetivo é transformar o aprendizado teórico em experiências práticas, des
 
 Durante as etapas de automação e orquestração de IA, o pipeline do **TechPulse** foi evoluído incrementalmente no **n8n** (self-hosted via Docker):
 
-### Etapa 3 — Orquestração com IA, Fallback de Modelos, JSON Estruturado e Agregação
-Integração de coleta de feeds RSS, controle de lote (`Limit`), classificação e resumo com a **API do Google Gemini** (`responseMimeType: "application/json"`), arquitetura de **fallback automático entre modelos** para resiliência contra limites de cota (`429`/`503`), curadoria semântica condicional (`If`) e consolidação de boletins (`Aggregate`):
+### Etapa 3 — Orquestração com IA, Fallback de Modelos, JSON Estruturado, Agregação e Resiliência
+Pipeline completo integrando coleta de feeds RSS, deduplicação na fonte (`Remove Duplicates`), controle de lote (`Limit`), classificação e resumo com a **API do Google Gemini** (`responseMimeType: "application/json"`), **tentativas automáticas (Retries)**, arquitetura de **fallback automático entre modelos** para resiliência contra limites de cota (`429`/`503`), curadoria semântica condicional (`If`) e consolidação de boletins (`Aggregate`):
 
-![Workflow TechPulse — Orquestração em múltiplas etapas](docs/assets/workflow-etapa3-orquestracao.png)
+![Workflow TechPulse — Pipeline Completo com IA e Resiliência](docs/assets/workflow-etapa3-completo-resiliencia.png)
 
 <details>
 <summary><strong>📸 Ver workflows das Etapas 1 e 2 (Fundamentos, APIs REST e Webhooks)</strong></summary>
@@ -89,7 +89,8 @@ preparacao-estagio-ifood/
 ├── 03-orquestracao-ia/
 │   ├── aula-03-rss-e-gemini.md
 │   ├── aula-04-prompts-e-json-estruturado.md
-│   └── aula-05-orquestracao-multiplas-etapas.md
+│   ├── aula-05-orquestracao-multiplas-etapas.md
+│   └── aula-06-tratamento-erros-retries-deduplicacao.md
 ├── 04-agentes-ia/
 ├── 05-projeto-pratico/
 └── 06-preparacao-entrevista/

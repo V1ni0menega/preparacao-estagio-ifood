@@ -324,3 +324,44 @@ Compreendido na prática como transformar um LLM (que naturalmente gera texto li
 Construído o núcleo funcional do **TechPulse** de ponta a ponta: `RSS Read → Limit → Gemini (com Fallback) → Validação (If) → Extração JSON (Edit Fields) → Curadoria Semântica (If1) → Consolidação (Aggregate) → Boletim TechPulse (Edit Fields1)`.
 
 **Próximo passo:** fechar o último tópico da Etapa 3 (10/11 — Tratamento de erros, tentativas/retries e deduplicação), consolidando o que já foi adiantado com o padrão de fallback.
+
+---
+
+## 11/11/2026 — Etapa 3, Aula 06: Tratamento de erros, retries nativos e deduplicação
+
+> Conteúdo e exercícios em [03-orquestracao-ia/aula-06-tratamento-erros-retries-deduplicacao.md](../03-orquestracao-ia/aula-06-tratamento-erros-retries-deduplicacao.md).
+
+### Conceitos
+
+- **As 3 Camadas de Defesa em Sistemas com LLM:**
+  1. *Camada 1 (Retry Automático com Backoff):* tenta novamente chamadas com falhas passageiras (`503`, glitches de rede) antes de desistir.
+  2. *Camada 2 (Fallback Gracioso entre Modelos):* desvia automaticamente para modelo alternativo (`Flash Lite`) caso o principal estoure rate limit (`429`) ou persista com erro.
+  3. *Camada 3 (Roteamento de Erro Controlado):* captura falhas no `If` (`candidates exists`) e direciona para fluxo de tratamento sem interromper o pipeline.
+- **Deduplicação de Dados (`Remove Duplicates`):**
+  - Diferenciação entre deduplicação no lote atual (*Within Current Input*) vs. entre execuções passadas (*In Previous Executions*).
+  - Uso do campo `link` (URL imutável) como chave primária para evitar que a mesma notícia consuma tokens repetidos da API do Gemini em coletas periódicas.
+
+### Exercício 1 e 2 — Retries no HTTP Request e Node Remove Duplicates
+
+1. Configurado no node `HTTP Request` principal:
+   - `Retry on Fail`: ativado (`Max Tries: 3`, `Wait Between Tries: 2000ms`).
+   - `On Error`: `Continue (using error output)`.
+2. Adicionado o node **Remove Duplicates** imediatamente após o `RSS Read` comparando por `link`.
+3. Executado o workflow de ponta a ponta com notícias reais do `dev.to`.
+
+#### Execução com Resiliência Comprovada no Canvas
+
+![Workflow TechPulse — Pipeline Completo com Resiliência e Fallback](assets/workflow-etapa3-completo-resiliencia.png)
+
+**Destaque da execução:**
+- O node `HTTP Request` principal processou 2 itens com sucesso e enviou 1 item com erro para a rota de falha.
+- O node `HTTP Request1` (fallback com `gemini-flash-lite-latest`) capturou esse item, processou com sucesso e convergiu no node `If`.
+- Resultado: 3 itens recuperados, filtrados pelo `If1`, gerando o boletim consolidado no `Edit Fields1` sem nenhuma perda de dados.
+
+### Aprendizados e próximos passos
+
+**Etapa 3 (Integração e Orquestração de IA): CONCLUÍDA COM 100% DE SUCESSO. ✅**
+
+O pipeline do TechPulse agora é um sistema de nível de produção: resiliente a falhas de rede, imune a duplicações de notícias, com controle de lote, curadoria semântica e saída estruturada em JSON.
+
+**Próximo passo:** Etapa 4 — Agentes de IA e Function Calling (11/11: Conceitos de Agentes, loops ReAct e diferenças em relação a workflows tradicionais).

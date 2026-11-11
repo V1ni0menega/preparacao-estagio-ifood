@@ -47,9 +47,9 @@ A documentação deverá refletir o que foi realmente estudado e implementado.
 - [x] 07/11 — Construção de workflows com processamento por IA. _(concluído adiantado em 04/11)_
 - [x] 08/11 — Engenharia de prompts e respostas estruturadas em JSON. _(concluído em 08/11)_
 - [x] 09/11 — Orquestração de múltiplas etapas. _(concluído adiantado em 08/11)_
-- [ ] 10/11 — Tratamento de erros, tentativas e validação de resultados. _(parcial já adiantado em 04/11 com fallback + validação de resposta)_
+- [x] 10/11 — Tratamento de erros, tentativas e validação de resultados. _(concluído em 11/11 com retries, fallback automático e deduplicação)_
 
-**Entrega:** pipeline capaz de coletar informações e processá-las com IA.
+**Entrega:** pipeline capaz de coletar informações e processá-las com IA. ✅
 
 ### Etapa 4 — Agentes de IA
 
@@ -69,14 +69,6 @@ A documentação deverá refletir o que foi realmente estudado e implementado.
 - [ ] 15/11 — Testes, correções, documentação e demonstração.
 
 **Entrega:** MVP demonstrável de um fluxo de coleta, processamento e organização de notícias tecnológicas.
-
-### Etapa 6 — Revisão e candidatura
-
-**16/11 a 17/11**
-
-- [ ] 16/11 — Revisão técnica, perguntas de entrevista e revisão do portfólio.
-- [ ] 17/11 — Conferência final e envio da candidatura.
-
 ## 3. Projeto prático — TechPulse
 
 O TechPulse será utilizado como ambiente de aplicação dos conhecimentos adquiridos.
