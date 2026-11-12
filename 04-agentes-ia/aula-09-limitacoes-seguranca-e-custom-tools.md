@@ -40,9 +40,6 @@ Diferente de um workflow fixo, a autonomia do agente traz riscos específicos de
 
 ### 2. O Padrão Human-in-the-Loop (HITL)
 
-> 💡 **Conceito de Ouro para Entrevista no iFood:** *"Você deixaria um agente de IA processar estornos financeiros ou cancelar pedidos de clientes de forma 100% autônoma?"*  
-> **Resposta:** Nunca para ações destrutivas ou de alto impacto. O padrão correto é **Human-in-the-Loop**.
-
 ```text
 [Usuário pede estorno] 
        ↓
