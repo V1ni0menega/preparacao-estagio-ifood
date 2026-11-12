@@ -56,66 +56,9 @@ Pipeline completo integrando coleta de feeds RSS, deduplicação na fonte (`Remo
 
 </details>
 
-## Projetos e experimentos
 
-### LinkedIn AI Post Generator
-
-Aplicação desenvolvida em Python e Streamlit, integrada à API do Google Gemini, para auxiliar na geração estruturada de publicações para o LinkedIn.
-
-**Tecnologias:** Python, Streamlit, Google Gemini API e JSON.
-
-### TechPulse
-
-Projeto em desenvolvimento conceitual, planejado para automatizar a coleta, classificação e síntese de notícias sobre tecnologia.
-
-A proposta é integrar fontes RSS, processamento com IA e armazenamento de informações em uma plataforma de acompanhamento tecnológico.
-
-**Tecnologias planejadas:** React, TypeScript, Node.js, MongoDB, Gemini API e n8n.
-
-### GitQuest
-
-Aplicação educacional desenvolvida com HTML, CSS e JavaScript, com o objetivo de ensinar conceitos e operações do Git por meio de uma experiência interativa e gamificada.
-
-## Organização do repositório
-
-```text
-preparacao-estagio-ifood/
-├── README.md
-├── compose.yml
-├── docs/
-│   ├── assets/
-│   ├── plano-de-estudos.md
-│   ├── diario-de-aprendizado.md
-│   └── referencias.md
-├── 01-automacao/
-│   ├── aula-01-fundamentos.md
-│   └── interface-n8n.md
-├── 02-apis-e-integracoes/
-│   └── aula-02-webhooks-e-api-rest.md
-├── 03-orquestracao-ia/
-│   ├── aula-03-rss-e-gemini.md
-│   ├── aula-04-prompts-e-json-estruturado.md
-│   ├── aula-05-orquestracao-multiplas-etapas.md
-│   └── aula-06-tratamento-erros-retries-deduplicacao.md
-├── 04-agentes-ia/
-│   ├── aula-07-conceitos-de-agentes-ia.md
-│   ├── aula-08-function-calling-e-agentes-pratica.md
-│   └── aula-09-limitacoes-seguranca-e-custom-tools.md
-└── 05-projeto-pratico/
-```
-
-A estrutura será ampliada conforme os estudos e experimentos evoluírem.
 
 ### Rodando o n8n localmente
-
-O ambiente de automação (n8n) roda via Docker Compose:
-
-```bash
-docker compose up -d
-```
-
-A interface fica disponível em `http://localhost:5678`.
-
 ## Metodologia
 
 A preparação é organizada em três frentes complementares:
